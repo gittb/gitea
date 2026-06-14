@@ -1,0 +1,28 @@
+# Gitea — compose-PULL (root compose.yaml pulls gitea/gitea:1.22, install pre-locked, self-registration
+# on). Journeys are self-contained from fresh state: each registers its own account first (O-6).
+up:
+  url: http://localhost:3000
+  health: /
+  ready_timeout_s: 300
+journeys:
+  - name: register-new-account
+    goal: >
+      A brand-new visitor opens the site, goes to the registration page, and creates an account
+      with a username, email, and password.
+    success: >
+      The signed-in dashboard is shown — the top-right header shows the new account's avatar/username
+      and a create ("+") menu, and the registration form is gone.
+  - name: create-new-repository
+    goal: >
+      A brand-new visitor registers an account, then creates a new repository, giving it a name and
+      initialising it with a README.
+    success: >
+      The new repository's main page is shown with the repository name as the heading and a README
+      file listed in the file view.
+  - name: open-new-issue
+    goal: >
+      A brand-new visitor registers, creates an initialised repository, opens its Issues tab, and
+      submits a new issue with a title and description.
+    success: >
+      The created issue's page is shown with the issue title as the heading, an "opened ... by
+      <username>" line, and an Open status badge.

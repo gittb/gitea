@@ -1,5 +1,6 @@
 # Gitea — compose-PULL (root compose.yaml pulls gitea/gitea:1.22, install pre-locked, self-registration
-# on). Journeys are self-contained from fresh state: each registers its own account first (O-6).
+# on). EXPANDED to 5 journeys. Each is self-contained from fresh state (registers its own account, O-6),
+# kept short to stay under max_steps (F-9).
 up:
   url: http://localhost:3000
   health: /
@@ -7,8 +8,8 @@ up:
 journeys:
   - name: register-new-account
     goal: >
-      A brand-new visitor opens the site, goes to the registration page, and creates an account
-      with a username, email, and password.
+      A brand-new visitor opens the site, goes to the registration page, and creates an account with
+      a username, email, and password.
     success: >
       The signed-in dashboard is shown — the top-right header shows the new account's avatar/username
       and a create ("+") menu, and the registration form is gone.
@@ -26,3 +27,16 @@ journeys:
     success: >
       The created issue's page is shown with the issue title as the heading, an "opened ... by
       <username>" line, and an Open status badge.
+  - name: star-own-repository
+    goal: >
+      A brand-new visitor registers, creates a repository, and stars it using the Star button on the
+      repository page.
+    success: >
+      The repository header's Star button now reads "Unstar" and its star count shows 1.
+  - name: create-private-repository
+    goal: >
+      A brand-new visitor registers, then creates a new repository with the "Make Repository Private"
+      option checked.
+    success: >
+      The new private repository's main page is shown with the repository name as the heading and a
+      "Private" label/badge next to the name.
